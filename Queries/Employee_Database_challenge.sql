@@ -48,3 +48,19 @@ ON e.emp_no = t.emp_no
 WHERE (de.to_date = '9999-01-01')
 AND (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
 ORDER BY e.emp_no;
+
+-- Additional Queries
+SELECT ut.title,
+	ut.count AS retirement_count,
+	ct.count AS current_count,
+	CAST(((ut.count *100)/ ct.count)AS DECIMAL) AS percentage $
+FROM unique_titles as ut
+JOIN current_titles as ct
+ON ut.title = ct.title
+GROUP BY ut.title, ct.count
+ORDER BY current_count DESC
+
+select count(emp_no), title
+from mentorship_eligibility
+group by title
+order by count(emp_no) desc
